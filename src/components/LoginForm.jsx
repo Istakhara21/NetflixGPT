@@ -1,54 +1,84 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { checkValidateDate } from "../utils/validate";
 
 // src/components/SignInOverlay.jsx
 export default function SignInOverlay() {
   const [isSignIn, setIsSignIn] = useState(true);
+  const [errorMessage, setErrorMessage] = useState();
+
+  const email = useRef(null);
+  const password = useRef(null);
 
   const handlingSignIn = () => {
     setIsSignIn(!isSignIn);
   };
 
+  const handleButtonClick = () => {
+    //Validate teh form data
+    //checkValidData(email, password)
+    const message = checkValidateDate(email.current.value, password.current.value);
+    setErrorMessage(message);
+
+    console.log(message);
+  };
+
   return (
     <div className="absolute inset-0 flex items-center justify-center z-10 px-4 mt-25">
       <div className="bg-black/80 px-8 py-10 rounded-lg max-w-md w-full space-y-6 backdrop-blur-sm">
-        <h1 className="text-4xl font-bold text-white">{isSignIn ? "Sign In" : "Sign Up"}</h1>
+        <h1 className="text-4xl font-bold text-white">
+          {isSignIn ? "Sign In" : "Sign Up"}
+        </h1>
 
         <div className="space-y-4">
-          {!isSignIn && <input
-            type="name"
-            placeholder="Full Name"
-            className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500"
-          />}
+          {!isSignIn && (
+            <input
+              type="name"
+              placeholder="Full Name"
+              className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500"
+            />
+          )}
           <input
+            ref={email}
             type="email"
             placeholder="Email or mobile number"
             className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500"
           />
 
           <input
+            ref={password}
             type="password"
             placeholder="Password"
             className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500"
           />
+          <p className="text-red-500 font-bold">{errorMessage}</p>
 
-          <button className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded">
+          <button
+            onClick={handleButtonClick}
+            className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded"
+          >
             {isSignIn ? "Sign In" : "Sign Up"}
           </button>
         </div>
 
-        <div className="flex items-center justify-center">
-          <p className="text-gray-400 text-sm">OR</p>
-        </div>
+        {isSignIn && (
+          <div className="flex items-center justify-center">
+            <p className="text-gray-400 text-sm">OR</p>
+          </div>
+        )}
 
-        <button className="w-full bg-gray-700/50 hover:bg-gray-600/50 text-white font-semibold py-3 rounded">
-          Use a sign-in code
-        </button>
+        {isSignIn && (
+          <button className="w-full bg-gray-700/50 hover:bg-gray-600/50 text-white font-semibold py-3 rounded">
+            Use a sign-in code
+          </button>
+        )}
 
-        <div className="text-center">
-          <a href="#" className="text-gray-300 hover:text-white text-sm">
-            Forgot password?
-          </a>
-        </div>
+        {isSignIn && (
+          <div className="text-center">
+            <a href="#" className="text-gray-300 hover:text-white text-sm">
+              Forgot password?
+            </a>
+          </div>
+        )}
 
         <div className="flex items-center gap-2">
           <input
