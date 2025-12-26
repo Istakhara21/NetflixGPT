@@ -1,3 +1,6 @@
+# URL
+ - https://netflixgpt-d31ea.web.app 
+
 # NetflixGPT
  - Created project using Vite + React
  - Installed Tailwind
