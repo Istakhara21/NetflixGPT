@@ -1,5 +1,10 @@
 import { useRef, useState } from "react";
 import { checkValidateDate } from "../utils/validate";
+import { auth } from "../utils/firebase";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 // src/components/SignInOverlay.jsx
 export default function SignInOverlay() {
@@ -9,6 +14,7 @@ export default function SignInOverlay() {
   const email = useRef(null);
   const password = useRef(null);
 
+
   const handlingSignIn = () => {
     setIsSignIn(!isSignIn);
   };
@@ -16,10 +22,48 @@ export default function SignInOverlay() {
   const handleButtonClick = () => {
     //Validate teh form data
     //checkValidData(email, password)
-    const message = checkValidateDate(email.current.value, password.current.value);
+    const message = checkValidateDate(
+      email.current.value,
+      password.current.value
+    );
     setErrorMessage(message);
 
-    console.log(message);
+    //Sign up form logic
+    createUserWithEmailAndPassword(
+      auth,
+      email.current.value,
+      password.current.value
+    )
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setErrorMessage(errorCode + "--" + errorMessage);
+
+        // ..
+      });
+
+    //Sign in form logic
+    signInWithEmailAndPassword(
+      auth,
+      email.current.value,
+      password.current.value
+    )
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setErrorMessage(errorCode + "-" + errorMessage);
+        // console.log(errorCode);
+      });
   };
 
   return (

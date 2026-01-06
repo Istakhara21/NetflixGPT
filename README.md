@@ -10,6 +10,9 @@
  - Login form
  - Validation
  - useRef
+ - Firebase Setup
+ - Deploying to Firebase
+ - 
 
 
 
