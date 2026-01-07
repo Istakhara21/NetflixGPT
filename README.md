@@ -17,7 +17,10 @@
  - Created Redux store using createSlice
  - implemented sign out
  - update profile
- - 
+ - BugFix: sign up user display name updated
+ - BugFix: only show browse page to signed in user
+ - Unsubscribed to teh onAuthStateChanged callback
+ - Added hard_coded things inside contants file 
 
 
 
