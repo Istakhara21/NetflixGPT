@@ -12,6 +12,11 @@
  - useRef
  - Firebase Setup
  - Deploying to Firebase
+ - Create signup user account
+ - Implement Sign in API (Firebase Auth)
+ - Created Redux store using createSlice
+ - implemented sign out
+ - update profile
  - 
 
 

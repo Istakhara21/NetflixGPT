@@ -4,16 +4,22 @@ import { auth } from "../utils/firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
+import { useNavigate } from "react-router";
+import { addUser } from "../utils/userSlice";
+import { useDispatch } from "react-redux";
 
 // src/components/SignInOverlay.jsx
 export default function SignInOverlay() {
+  const navigate = useNavigate();
   const [isSignIn, setIsSignIn] = useState(true);
   const [errorMessage, setErrorMessage] = useState();
+  const dispatch = useDispatch();
 
+  const fullName = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
-
 
   const handlingSignIn = () => {
     setIsSignIn(!isSignIn);
@@ -27,43 +33,65 @@ export default function SignInOverlay() {
       password.current.value
     );
     setErrorMessage(message);
+    if (message) {
+      console.log("Validation error:", message);
+      return; // Stop if invalid
+    }
 
-    //Sign up form logic
-    createUserWithEmailAndPassword(
-      auth,
-      email.current.value,
-      password.current.value
-    )
-      .then((userCredential) => {
-        // Signed up
-        const user = userCredential.user;
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        setErrorMessage(errorCode + "--" + errorMessage);
+    if (isSignIn == true) {
+      //Sign in form logic
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          navigate("/browse");
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + "-" + errorMessage);
+          // console.log(errorCode);
+        });
+    } else {
+      //Sign up form logic
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          updateProfile(auth.currentUser, {
+            displayName: fullName.current.value,
+            photoURL: "https://example.com/jane-q-user/profile.jpg",
+          })
+            .then(() => {
+              //Dispacth an action to add an user profile name
+              const { displayName, uid, email } = auth.currentUser;
+               dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
+              navigate("/browse"); // onAuthStateChanged will fire by then
+            })
 
-        // ..
-      });
+            .catch((error) => {
+              // An error occurred
+              // ...
+            });
+        })
 
-    //Sign in form logic
-    signInWithEmailAndPassword(
-      auth,
-      email.current.value,
-      password.current.value
-    )
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        setErrorMessage(errorCode + "-" + errorMessage);
-        // console.log(errorCode);
-      });
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + "--" + errorMessage);
+
+          // ..
+        });
+    }
   };
 
   return (
@@ -76,6 +104,7 @@ export default function SignInOverlay() {
         <div className="space-y-4">
           {!isSignIn && (
             <input
+              ref={fullName}
               type="name"
               placeholder="Full Name"
               className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500"
