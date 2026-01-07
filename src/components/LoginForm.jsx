@@ -6,13 +6,11 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { useNavigate } from "react-router";
 import { addUser } from "../utils/userSlice";
 import { useDispatch } from "react-redux";
 
 // src/components/SignInOverlay.jsx
 export default function SignInOverlay() {
-  const navigate = useNavigate();
   const [isSignIn, setIsSignIn] = useState(true);
   const [errorMessage, setErrorMessage] = useState();
   const dispatch = useDispatch();
@@ -48,7 +46,6 @@ export default function SignInOverlay() {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          navigate("/browse");
           // ...
         })
         .catch((error) => {
@@ -75,7 +72,7 @@ export default function SignInOverlay() {
               //Dispacth an action to add an user profile name
               const { displayName, uid, email } = auth.currentUser;
                dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
-              navigate("/browse"); // onAuthStateChanged will fire by then
+               // onAuthStateChanged will fire by then
             })
 
             .catch((error) => {
