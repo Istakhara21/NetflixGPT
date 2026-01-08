@@ -32,7 +32,6 @@ export default function SignInOverlay() {
     );
     setErrorMessage(message);
     if (message) {
-      console.log("Validation error:", message);
       return; // Stop if invalid
     }
 
@@ -52,7 +51,6 @@ export default function SignInOverlay() {
           const errorCode = error.code;
           const errorMessage = error.message;
           setErrorMessage(errorCode + "-" + errorMessage);
-          // console.log(errorCode);
         });
     } else {
       //Sign up form logic

@@ -21,6 +21,15 @@
  - BugFix: only show browse page to signed in user
  - Unsubscribed to teh onAuthStateChanged callback
  - Added hard_coded things inside contants file 
+ - Setup TMDB
+ -get data from TMDB
+ - created custome hook -> nowPlayingMovie
+ - update store with movie data
+ - planning MainContainer and SecondaryContainer
+ - Fetch data for trailer video
+ - update store with trailer data
+ - Embedder video with autoplay and mute
+ - use tailwind to create Hero Section
 
 
 

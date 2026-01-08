@@ -4,7 +4,7 @@ import { auth } from "../utils/firebase";
 import { Link, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
-import { netflix_logo, user_avatar, userAvatar } from "../utils/constants";
+import { netflix_logo, user_avatar } from "../utils/constants";
 
 const Header = () => {
   const navigate = useNavigate();
