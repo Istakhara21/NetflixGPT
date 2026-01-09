@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { netflix_logo, user_avatar } from "../utils/constants";
+import { toggleChangeClick } from "../utils/gptSlice";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -42,33 +43,38 @@ const Header = () => {
       });
   };
 
+  const handleGptToggle = () => {
+    dispatch(toggleChangeClick());
+  };
+
   return (
     <div className=" flex justify-between absolute w-screen px-8 py-2 bg-gradient-to-b from-black">
       <Link to={"/"}>
-        <img
-          className="w-52"
-          src={netflix_logo}
-          alt="Logo"
-        />
+        <img className="w-52" src={netflix_logo} alt="Logo" />
       </Link>
 
       {/* Sign Out */}
-
-      {user && (
-        <div className="flex h-12">
-          <img
-            className=""
-            src={user_avatar}
-            alt=""
-          />
-          <button
-            onClick={handleSignOut}
-            className="cursor-pointer px-3 mx-7 text-white font-bold"
-          >
-            SignOut
-          </button>
+      <div className="flex mr-7 mt-4">
+        <button
+          className="cursor-pointer mb-8 mr-3 rounded-lg border-2 bg-white font-bold text-black"
+          onClick={handleGptToggle}
+        >
+          GPT Search
+        </button>
+        <div>
+          {user && (
+            <div className="flex h-12">
+              <img className="" src={user_avatar} alt="" />
+              <button
+                onClick={handleSignOut}
+                className="cursor-pointer px-3 mx-2 text-white font-bold"
+              >
+                SignOut
+              </button>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };
