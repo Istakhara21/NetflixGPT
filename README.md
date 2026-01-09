@@ -29,7 +29,9 @@
  - Fetch data for trailer video
  - update store with trailer data
  - Embedder video with autoplay and mute
- - use tailwind to create Hero Section
+- use tailwind to create Hero Sectio
+- made custom hooks for each movie list (upcoming, top rated etc)
+- render most types of movies list in the SecondaryContainer
 
 
 
