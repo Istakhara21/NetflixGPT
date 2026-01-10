@@ -4,7 +4,7 @@ import useNowPlayingMovies from "../hooks/useNowPlayingMovies";
 import { usePopularMovies } from "../hooks/usePopularMovies";
 import useTopRatedMovies from "../hooks/useTopRated";
 import { useUpcomingMovies } from "../hooks/useUpcomingMovies";
-import GptSearch from "./GptSearch";
+import GptSearchPage from "./GptSearchPage";
 import MainContainer from "./MainContainer";
 import SecondaryContainer from "./SecondaryContainer";
 
@@ -20,7 +20,7 @@ const Browse = () => {
     <>
       <Header />
       {gptView ? (
-        <GptSearch />
+        <GptSearchPage />
       ) : (
         <>
           {" "}

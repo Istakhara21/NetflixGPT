@@ -33,7 +33,8 @@
 - made custom hooks for each movie list (upcoming, top rated etc)
 - render most types of movies list in the SecondaryContainer
 - we've added GptSearch button and a toggle feature (when we click on it, it will show GPTSearch page (On/Off) page)
-
+- added language change option
+- link to search bar to change language
 
 
 # features

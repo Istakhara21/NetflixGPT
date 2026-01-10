@@ -4,8 +4,13 @@ import { auth } from "../utils/firebase";
 import { Link, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
-import { netflix_logo, user_avatar } from "../utils/constants";
+import {
+  netflix_logo,
+  SUPPORTED_LANGUAGES,
+  user_avatar,
+} from "../utils/constants";
 import { toggleChangeClick } from "../utils/gptSlice";
+import { changeLanguage } from "../utils/configSlice";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -47,6 +52,10 @@ const Header = () => {
     dispatch(toggleChangeClick());
   };
 
+  const handleLanguageChange = (e) => {
+    dispatch(changeLanguage(e.target.value))
+  }
+
   return (
     <div className=" flex justify-between absolute w-screen px-8 py-2 bg-gradient-to-b from-black">
       <Link to={"/"}>
@@ -54,16 +63,21 @@ const Header = () => {
       </Link>
 
       {/* Sign Out */}
-      <div className="flex mr-7 mt-4">
-        <button
-          className="cursor-pointer mb-8 mr-3 rounded-lg border-2 bg-white font-bold text-black"
-          onClick={handleGptToggle}
-        >
-          GPT Search
-        </button>
+      <div className="flex">
         <div>
           {user && (
             <div className="flex h-12">
+              <select className="bg-white rounded-lg cursor-pointer" onChange={handleLanguageChange}>
+                {SUPPORTED_LANGUAGES.map((lang) => (
+                  <option key={lang.identifier} value={lang.identifier}>{lang.name}</option>
+                ))}
+              </select>
+              <button
+                className="bg-white rounded-lg mx-2 font-bold px-2 border-4 border-red-900 cursor-pointer"
+                onClick={handleGptToggle}
+              >
+                GPT Search
+              </button>
               <img className="" src={user_avatar} alt="" />
               <button
                 onClick={handleSignOut}
