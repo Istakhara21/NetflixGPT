@@ -122,7 +122,7 @@ export default function SignInOverlay() {
 
           <button
             onClick={handleButtonClick}
-            className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded"
+            className="cursor-pointer w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded"
           >
             {isSignIn ? "Sign In" : "Sign Up"}
           </button>
@@ -135,14 +135,14 @@ export default function SignInOverlay() {
         )}
 
         {isSignIn && (
-          <button className="w-full bg-gray-700/50 hover:bg-gray-600/50 text-white font-semibold py-3 rounded">
+          <button className="cursor-pointer w-full bg-gray-700/50 hover:bg-gray-600/50 text-white font-semibold py-3 rounded">
             Use a sign-in code
           </button>
         )}
 
         {isSignIn && (
           <div className="text-center">
-            <a href="#" className="text-gray-300 hover:text-white text-sm">
+            <a href="#" className="cursor-pointer text-gray-300 hover:text-white text-sm">
               Forgot password?
             </a>
           </div>
@@ -154,7 +154,7 @@ export default function SignInOverlay() {
             id="rememberMe"
             className="w-4 h-4 bg-gray-700 border border-gray-600 rounded accent-red-600"
           />
-          <label htmlFor="rememberMe" className="text-gray-300 text-sm">
+          <label htmlFor="rememberMe" className="cursor-pointer text-gray-300 text-sm">
             Remember me
           </label>
         </div>

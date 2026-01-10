@@ -14,6 +14,7 @@ import { changeLanguage } from "../utils/configSlice";
 
 const Header = () => {
   const navigate = useNavigate();
+  const gptSearchTrue = useSelector((store) => store.gpt.showGptSearch);
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
@@ -53,8 +54,8 @@ const Header = () => {
   };
 
   const handleLanguageChange = (e) => {
-    dispatch(changeLanguage(e.target.value))
-  }
+    dispatch(changeLanguage(e.target.value));
+  };
 
   return (
     <div className=" flex justify-between absolute w-screen px-8 py-2 bg-gradient-to-b from-black">
@@ -67,11 +68,18 @@ const Header = () => {
         <div>
           {user && (
             <div className="flex h-12">
-              <select className="bg-white rounded-lg cursor-pointer" onChange={handleLanguageChange}>
-                {SUPPORTED_LANGUAGES.map((lang) => (
-                  <option key={lang.identifier} value={lang.identifier}>{lang.name}</option>
-                ))}
-              </select>
+              {gptSearchTrue && (
+                <select
+                  className="bg-white rounded-lg cursor-pointer"
+                  onChange={handleLanguageChange}
+                >
+                  {SUPPORTED_LANGUAGES.map((lang) => (
+                    <option key={lang.identifier} value={lang.identifier}>
+                      {lang.name}
+                    </option>
+                  ))}
+                </select>
+              )}
               <button
                 className="bg-white rounded-lg mx-2 font-bold px-2 border-4 border-red-900 cursor-pointer"
                 onClick={handleGptToggle}
