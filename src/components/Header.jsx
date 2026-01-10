@@ -84,7 +84,7 @@ const Header = () => {
                 className="bg-white rounded-lg mx-2 font-bold px-2 border-4 border-red-900 cursor-pointer"
                 onClick={handleGptToggle}
               >
-                GPT Search
+                {gptSearchTrue ? "Home" : "GPT Search"}
               </button>
               <img className="" src={user_avatar} alt="" />
               <button
